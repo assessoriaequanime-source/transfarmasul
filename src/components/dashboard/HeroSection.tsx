@@ -1,5 +1,6 @@
-import { Building2, Database, Printer, FileJson, FileSpreadsheet, Trash2 } from "lucide-react";
+import { Database, Printer, FileJson, FileSpreadsheet, Trash2 } from "lucide-react";
 import type { DashboardState } from "@/lib/dashboard-data";
+import logo from "@/assets/logo-transfarmasul.jpeg";
 
 interface Props {
   onSeedDemo: () => void;
