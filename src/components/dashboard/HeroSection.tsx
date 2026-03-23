@@ -30,7 +30,7 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, stat
         <div className="absolute -right-24 -bottom-24 w-64 h-64 rounded-full opacity-20" style={{ background: "radial-gradient(circle, hsl(204 38% 45%), transparent 70%)" }} />
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 text-accent text-xs font-bold uppercase tracking-widest mb-3">
-            <Building2 className="w-4 h-4" />
+            <img src={logo} alt="TransFarmaSul" className="w-10 h-10 rounded-lg object-contain" />
             TransFarmaSul · cockpit operacional
           </div>
           <h1 className="text-2xl lg:text-3xl font-bold tracking-tight leading-tight mb-2">
