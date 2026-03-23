@@ -91,7 +91,8 @@
 
 @layer components {
   .dashboard-card {
-    @apply bg-card border border-border rounded-[var(--radius)] p-5;
+    @apply bg-card border border-border p-5;
+    border-radius: var(--radius);
     box-shadow: var(--shadow-card);
   }
   .kpi-value {
