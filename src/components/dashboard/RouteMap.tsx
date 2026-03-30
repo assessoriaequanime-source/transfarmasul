@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Map } from "lucide-react";
+import { Map, Focus } from "lucide-react";
 import type { Route } from "@/lib/dashboard-data";
 import "leaflet/dist/leaflet.css";
 
@@ -45,18 +45,13 @@ const ROUTE_COLORS = [
 ];
 
 export default function RouteMap({ routes }: Props) {
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [focusedId, setFocusedId] = useState<string | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<any>(null);
   const layersRef = useRef<any[]>([]);
 
-  const toggleRoute = (id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const focusRoute = (id: string) => {
+    setFocusedId((prev) => (prev === id ? null : id));
   };
 
   // Initialize Leaflet map
@@ -65,10 +60,8 @@ export default function RouteMap({ routes }: Props) {
 
     async function init() {
       const L = (await import("leaflet")).default;
-
       if (cancelled || !mapRef.current || leafletMapRef.current) return;
 
-      // Fix default marker icons
       delete (L.Icon.Default.prototype as any)._getIconUrl;
       L.Icon.Default.mergeOptions({
         iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -87,13 +80,10 @@ export default function RouteMap({ routes }: Props) {
       }).addTo(map);
 
       leafletMapRef.current = map;
-
-      // Force resize
       setTimeout(() => map.invalidateSize(), 200);
     }
 
     init();
-
     return () => {
       cancelled = true;
       if (leafletMapRef.current) {
@@ -103,77 +93,80 @@ export default function RouteMap({ routes }: Props) {
     };
   }, []);
 
-  // Update markers and lines based on selection
+  // Draw ALL routes, highlight focused
   useEffect(() => {
     async function update() {
       const L = (await import("leaflet")).default;
       const map = leafletMapRef.current;
       if (!map) return;
 
-      // Clear old layers
       layersRef.current.forEach((layer) => map.removeLayer(layer));
       layersRef.current = [];
 
-      const activeRoutes = routes.filter((r) => selectedIds.has(r.id));
+      const allPoints: [number, number][] = [];
 
-      activeRoutes.forEach((r, i) => {
+      routes.forEach((r, i) => {
         const origin = getCoords(r.origin);
         const dest = getCoords(r.destination);
         const color = ROUTE_COLORS[i % ROUTE_COLORS.length];
+        const isFocused = focusedId === r.id;
+        const opacity = focusedId ? (isFocused ? 1 : 0.25) : 0.85;
+        const weight = isFocused ? 5 : 3;
 
         if (origin) {
           const marker = L.circleMarker([origin[0], origin[1]], {
-            radius: 8,
+            radius: isFocused ? 10 : 7,
             fillColor: color,
             color: "#fff",
             weight: 2,
-            fillOpacity: 0.9,
-          })
-            .addTo(map)
-            .bindPopup(`<b>Origem:</b> ${r.origin}`);
+            fillOpacity: opacity,
+          }).addTo(map).bindPopup(`<b>Origem:</b> ${r.origin}`);
           layersRef.current.push(marker);
+          allPoints.push(origin);
         }
 
         if (dest) {
           const marker = L.circleMarker([dest[0], dest[1]], {
-            radius: 8,
+            radius: isFocused ? 10 : 7,
             fillColor: color,
             color: "#fff",
             weight: 2,
-            fillOpacity: 0.9,
-          })
-            .addTo(map)
-            .bindPopup(`<b>Destino:</b> ${r.destination}`);
+            fillOpacity: opacity,
+          }).addTo(map).bindPopup(`<b>Destino:</b> ${r.destination}`);
           layersRef.current.push(marker);
+          allPoints.push(dest);
         }
 
         if (origin && dest) {
           const line = L.polyline(
             [[origin[0], origin[1]], [dest[0], dest[1]]],
-            { color, weight: 3, dashArray: "8, 6", opacity: 0.85 }
+            { color, weight, dashArray: "8, 6", opacity }
           ).addTo(map);
           line.bindPopup(`<b>${r.origin} → ${r.destination}</b><br/>${r.distanceKm} km`);
           layersRef.current.push(line);
         }
       });
 
-      // Fit bounds if we have points
-      if (layersRef.current.length > 0) {
-        const allPoints: [number, number][] = [];
-        activeRoutes.forEach((r) => {
-          const o = getCoords(r.origin);
-          const d = getCoords(r.destination);
-          if (o) allPoints.push(o);
-          if (d) allPoints.push(d);
-        });
-        if (allPoints.length > 0) {
-          map.fitBounds(allPoints.map((p) => [p[0], p[1]]) as any, { padding: [40, 40], maxZoom: 10 });
+      // Focus on specific route or fit all
+      if (focusedId) {
+        const focused = routes.find((r) => r.id === focusedId);
+        if (focused) {
+          const pts: [number, number][] = [];
+          const o = getCoords(focused.origin);
+          const d = getCoords(focused.destination);
+          if (o) pts.push(o);
+          if (d) pts.push(d);
+          if (pts.length > 0) {
+            map.fitBounds(pts, { padding: [60, 60], maxZoom: 10 });
+          }
         }
+      } else if (allPoints.length > 0) {
+        map.fitBounds(allPoints, { padding: [40, 40], maxZoom: 10 });
       }
     }
 
     update();
-  }, [selectedIds, routes]);
+  }, [focusedId, routes]);
 
   return (
     <div className="dashboard-card">
@@ -182,7 +175,7 @@ export default function RouteMap({ routes }: Props) {
         <h2 className="section-title">Mapa de operações</h2>
       </div>
       <p className="section-desc mb-4">
-        Clique nas rotas abaixo para traçar os pontos no mapa interativo.
+        Todas as rotas são exibidas. Clique em uma para dar foco e centralizar no mapa.
       </p>
 
       <div ref={mapRef} className="rounded-2xl overflow-hidden border border-border relative z-0" style={{ height: 420 }} />
@@ -190,25 +183,25 @@ export default function RouteMap({ routes }: Props) {
       {routes.length > 0 && (
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {routes.map((r, i) => {
-            const active = selectedIds.has(r.id);
+            const focused = focusedId === r.id;
             const color = ROUTE_COLORS[i % ROUTE_COLORS.length];
             return (
               <button
                 key={r.id}
-                onClick={() => toggleRoute(r.id)}
+                onClick={() => focusRoute(r.id)}
                 className={`flex items-center gap-2 rounded-xl px-3 py-2 border text-left transition-all ${
-                  active
+                  focused
                     ? "ring-2 ring-accent bg-accent/10 border-accent shadow-sm"
                     : "bg-muted border-border hover:border-accent/50"
                 }`}
               >
-                <div
-                  className="w-3 h-3 rounded-full shrink-0 border-2"
-                  style={{
-                    backgroundColor: active ? color : "transparent",
-                    borderColor: color,
-                  }}
-                />
+                <div className="flex items-center gap-2 shrink-0">
+                  <div
+                    className="w-3 h-3 rounded-full border-2"
+                    style={{ backgroundColor: color, borderColor: color }}
+                  />
+                  {focused && <Focus className="w-3.5 h-3.5 text-accent" />}
+                </div>
                 <div className="min-w-0">
                   <p className="text-xs font-semibold truncate">
                     {r.origin} → {r.destination}
