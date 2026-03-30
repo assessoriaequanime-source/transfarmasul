@@ -1,4 +1,4 @@
-import { ArrowDown, AlertTriangle } from "lucide-react";
+import { ArrowDown, AlertTriangle, GraduationCap } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/dashboard-data";
 
 export default function StrategicPlanningSection() {
@@ -29,9 +29,12 @@ export default function StrategicPlanningSection() {
         {levels.map((level, i) => (
           <div key={level.title}>
             <div className="rounded-2xl border border-border overflow-hidden">
-              <div className={`bg-gradient-to-r ${level.gradient} px-5 py-3`}>
-                <h3 className="text-white font-bold text-sm">{level.title}</h3>
-                <p className="text-white/80 text-xs">{level.desc}</p>
+              <div className={`bg-gradient-to-r ${level.gradient} px-5 py-3 flex items-center gap-2`}>
+                <GraduationCap className="w-4 h-4 text-white/70" title="Seção acadêmica" />
+                <div>
+                  <h3 className="text-white font-bold text-sm">{level.title}</h3>
+                  <p className="text-white/80 text-xs">{level.desc}</p>
+                </div>
               </div>
               <div className="p-4 bg-card">
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -42,6 +45,7 @@ export default function StrategicPlanningSection() {
                     </li>
                   ))}
                 </ul>
+                <p className="text-[10px] text-muted-foreground/50 italic mt-3">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico*</p>
               </div>
             </div>
             {i < levels.length - 1 && (
@@ -56,6 +60,7 @@ export default function StrategicPlanningSection() {
       <div className="rounded-2xl border border-border overflow-hidden">
         <div className="bg-gradient-to-r from-amber-600 to-amber-500 px-5 py-3 flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 text-white" />
+          <GraduationCap className="w-4 h-4 text-white/70" title="Seção acadêmica" />
           <div>
             <h3 className="text-white font-bold text-sm">Plano de contingência (5W2H)</h3>
             <p className="text-white/80 text-xs">Ações para crises como greves e aumento de combustível</p>
@@ -70,12 +75,16 @@ export default function StrategicPlanningSection() {
               </li>
             ))}
           </ul>
+          <p className="text-[10px] text-muted-foreground/50 italic mt-3">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico*</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="rounded-2xl border border-border p-4">
-          <h4 className="text-xs font-bold text-foreground mb-2">Pontos Fortes</h4>
+          <div className="flex items-center gap-2 mb-2">
+            <h4 className="text-xs font-bold text-foreground">Pontos Fortes</h4>
+            <GraduationCap className="w-3.5 h-3.5 text-muted-foreground/50" title="Seção acadêmica" />
+          </div>
           <ul className="space-y-1">
             {COMPANY_INFO.pontosFortes.map((p) => (
               <li key={p} className="text-xs text-muted-foreground flex items-start gap-1.5">
@@ -86,7 +95,10 @@ export default function StrategicPlanningSection() {
           </ul>
         </div>
         <div className="rounded-2xl border border-border p-4">
-          <h4 className="text-xs font-bold text-foreground mb-2">Pontos Fracos</h4>
+          <div className="flex items-center gap-2 mb-2">
+            <h4 className="text-xs font-bold text-foreground">Pontos Fracos</h4>
+            <GraduationCap className="w-3.5 h-3.5 text-muted-foreground/50" title="Seção acadêmica" />
+          </div>
           <ul className="space-y-1">
             {COMPANY_INFO.pontosFracos.map((p) => (
               <li key={p} className="text-xs text-muted-foreground flex items-start gap-1.5">

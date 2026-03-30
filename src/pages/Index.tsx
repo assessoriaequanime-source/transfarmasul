@@ -12,8 +12,7 @@ import RouteMap from "@/components/dashboard/RouteMap";
 import ReportsSection from "@/components/dashboard/ReportsSection";
 import StrategicPlanningSection from "@/components/dashboard/StrategicPlanningSection";
 import CollapsibleSection from "@/components/dashboard/CollapsibleSection";
-import HelpBubble from "@/components/dashboard/HelpBubble";
-import UtilityPanel from "@/components/dashboard/UtilityPanel";
+import FloatingToolkit from "@/components/dashboard/FloatingToolkit";
 
 export default function Index() {
   const [state, setState] = useState<DashboardState>(loadState);
@@ -40,7 +39,7 @@ export default function Index() {
 
   return (
     <div className="max-w-[1520px] mx-auto px-4 py-6 space-y-5">
-      <HeroSection onSeedDemo={seedDemo} onClearAll={clearAll} onExportJson={exportJson} state={state} />
+      <HeroSection onSeedDemo={seedDemo} onClearAll={clearAll} onExportJson={exportJson} onSetState={setState} state={state} />
 
       {/* KPIs + Funil - always visible */}
       <div className="dashboard-card">
@@ -85,14 +84,43 @@ export default function Index() {
         <ReportsSection reports={state.reports} state={state} onChange={(reports) => update({ reports })} />
       </CollapsibleSection>
 
+      {/* Consultar relatório */}
+      <div className="dashboard-card text-center space-y-2">
+        <p className="text-sm font-semibold">Consultar relatório acadêmico</p>
+        <p className="text-xs text-muted-foreground">Cole o ID do seu relatório para consultar o resultado.</p>
+        <div className="flex items-center justify-center gap-2 max-w-md mx-auto">
+          <input
+            type="text"
+            placeholder="rel_abc123def..."
+            className="flex-1 border border-input rounded-xl px-3 py-2 text-sm bg-card outline-none focus:border-accent"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const val = (e.target as HTMLInputElement).value.trim();
+                if (val) window.location.href = `/relatorio?id=${val}`;
+              }
+            }}
+          />
+          <button
+            onClick={() => {
+              const input = document.querySelector<HTMLInputElement>('input[placeholder*="rel_"]');
+              const val = input?.value.trim();
+              if (val) window.location.href = `/relatorio?id=${val}`;
+            }}
+            className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-sm font-semibold"
+          >
+            Consultar
+          </button>
+        </div>
+      </div>
+
       <div className="text-center py-6 space-y-1">
         <p className="text-xs text-muted-foreground">TransFarmaSul · Dashboard Analítico de estudos·</p>
         <p className="text-[10px] text-muted-foreground/60">BY DEV - Ana Cristina Alves Ferreira</p>
+        <a href="/professor" className="text-[10px] text-muted-foreground/40 hover:text-muted-foreground/60 transition-colors">Acesso Professor</a>
       </div>
 
-      {/* Floating widgets */}
-      <HelpBubble />
-      <UtilityPanel />
+      {/* Floating widget */}
+      <FloatingToolkit />
     </div>
   );
 }
