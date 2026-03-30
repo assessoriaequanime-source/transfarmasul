@@ -7,7 +7,9 @@ import BICharts from "@/components/dashboard/BICharts";
 import VehicleSection from "@/components/dashboard/VehicleSection";
 import SupplierSection from "@/components/dashboard/SupplierSection";
 import RouteSection from "@/components/dashboard/RouteSection";
+import RouteMap from "@/components/dashboard/RouteMap";
 import ReportsSection from "@/components/dashboard/ReportsSection";
+import StrategicPlanningSection from "@/components/dashboard/StrategicPlanningSection";
 
 export default function Index() {
   const [state, setState] = useState<DashboardState>(loadState);
@@ -38,7 +40,7 @@ export default function Index() {
 
       <div className="dashboard-card">
         <h2 className="section-title mb-1">Resumo executivo</h2>
-        <p className="section-desc mb-5">Leitura rápida da operação com KPIs e funil invertido.</p>
+        <p className="section-desc mb-5">Leitura rápida da operação com KPIs e funil estratégico.</p>
         <KPICards state={state} />
       </div>
 
@@ -51,6 +53,9 @@ export default function Index() {
         </div>
       </div>
 
+      {/* Mapa de operações */}
+      <RouteMap routes={state.routes} />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div className="space-y-5">
           <VehicleSection vehicles={state.vehicles} onChange={(vehicles) => update({ vehicles })} />
@@ -62,10 +67,13 @@ export default function Index() {
 
       <RouteSection routes={state.routes} vehicles={state.vehicles} onChange={(routes) => update({ routes })} />
 
+      {/* Planejamento estratégico do documento */}
+      <StrategicPlanningSection />
+
       <ReportsSection reports={state.reports} state={state} onChange={(reports) => update({ reports })} />
 
       <div className="text-center text-xs text-muted-foreground py-4">
-        TransFarmaSul · Dashboard MVP · Dados salvos localmente no navegador
+        TransFarmaSul · Dashboard MVP · Criciúma, SC · Dados salvos localmente no navegador
       </div>
     </div>
   );
