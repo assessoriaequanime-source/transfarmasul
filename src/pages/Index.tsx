@@ -72,8 +72,9 @@ export default function Index() {
 
       <ReportsSection reports={state.reports} state={state} onChange={(reports) => update({ reports })} />
 
-      <div className="text-center text-xs text-muted-foreground py-4">
-        TransFarmaSul · Dashboard MVP · Criciúma, SC · Dados salvos localmente no navegador
+      <div className="text-center py-6 space-y-1">
+        <p className="text-xs text-muted-foreground">TransFarmaSul · Dashboard Analítico de estudos·</p>
+        <p className="text-[10px] text-muted-foreground/60">BY DEV - Ana Cristina Alves Ferreira</p>
       </div>
     </div>
   );

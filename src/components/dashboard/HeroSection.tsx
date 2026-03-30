@@ -34,8 +34,8 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, stat
             <div className="inline-flex items-center gap-3 mb-3">
               <img src={logo} alt="TransFarmaSul" className="w-12 h-12 rounded-xl object-contain shadow-md" />
               <div>
-                <span className="text-accent text-xs font-bold uppercase tracking-widest">TransFarmaSul · cockpit operacional</span>
-                <p className="text-xs text-muted-foreground">Criciúma – Santa Catarina · 2026</p>
+                <span className="text-accent text-xs font-bold uppercase tracking-widest">Painel Administrativo - SWOT</span>
+                <p className="text-xs text-muted-foreground">Acadêmicos do curso de Administração</p>
               </div>
             </div>
             <h1 className="text-2xl lg:text-3xl font-bold tracking-tight leading-tight mb-2">
