@@ -1,4 +1,4 @@
-import { Layers, ArrowDown, AlertTriangle } from "lucide-react";
+import { ArrowDown, AlertTriangle } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/dashboard-data";
 
 export default function StrategicPlanningSection() {
