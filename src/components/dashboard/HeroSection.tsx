@@ -117,7 +117,7 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, onSe
           <div className="flex items-center gap-2 mb-2">
             <Target className="w-5 h-5 text-accent" />
             <h3 className="font-semibold text-sm">Missão</h3>
-            <GraduationCap className="w-4 h-4 text-muted-foreground/50" title="Seção acadêmica" />
+            <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-muted-foreground/50" /></span>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">{COMPANY_INFO.missao}</p>
           <p className="text-[10px] text-muted-foreground/50 italic mt-3">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico*</p>
@@ -126,7 +126,7 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, onSe
           <div className="flex items-center gap-2 mb-2">
             <Eye className="w-5 h-5 text-accent" />
             <h3 className="font-semibold text-sm">Visão</h3>
-            <GraduationCap className="w-4 h-4 text-muted-foreground/50" title="Seção acadêmica" />
+            <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-muted-foreground/50" /></span>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">{COMPANY_INFO.visao}</p>
           <p className="text-[10px] text-muted-foreground/50 italic mt-3">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico*</p>
@@ -135,7 +135,7 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, onSe
           <div className="flex items-center gap-2 mb-2">
             <Shield className="w-5 h-5 text-accent" />
             <h3 className="font-semibold text-sm">Valores</h3>
-            <GraduationCap className="w-4 h-4 text-muted-foreground/50" title="Seção acadêmica" />
+            <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-muted-foreground/50" /></span>
           </div>
           <ul className="space-y-1">
             {COMPANY_INFO.valores.map((v) => (

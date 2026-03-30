@@ -83,7 +83,7 @@ export default function StrategicPlanningSection() {
         <div className="rounded-2xl border border-border p-4">
           <div className="flex items-center gap-2 mb-2">
             <h4 className="text-xs font-bold text-foreground">Pontos Fortes</h4>
-            <GraduationCap className="w-3.5 h-3.5 text-muted-foreground/50" title="Seção acadêmica" />
+            <span title="Seção acadêmica"><GraduationCap className="w-3.5 h-3.5 text-muted-foreground/50" /></span>
           </div>
           <ul className="space-y-1">
             {COMPANY_INFO.pontosFortes.map((p) => (
@@ -97,7 +97,7 @@ export default function StrategicPlanningSection() {
         <div className="rounded-2xl border border-border p-4">
           <div className="flex items-center gap-2 mb-2">
             <h4 className="text-xs font-bold text-foreground">Pontos Fracos</h4>
-            <GraduationCap className="w-3.5 h-3.5 text-muted-foreground/50" title="Seção acadêmica" />
+            <span title="Seção acadêmica"><GraduationCap className="w-3.5 h-3.5 text-muted-foreground/50" /></span>
           </div>
           <ul className="space-y-1">
             {COMPANY_INFO.pontosFracos.map((p) => (
