@@ -24,13 +24,7 @@ export default function StrategicPlanningSection() {
   ];
 
   return (
-    <div className="dashboard-card">
-      <div className="flex items-center gap-2 mb-1">
-        <Layers className="w-5 h-5 text-accent" />
-        <h2 className="section-title">Planejamento estratégico organizacional</h2>
-      </div>
-      <p className="section-desc mb-5">Três níveis de planejamento: estratégico, tático e operacional — 5W2H aplicado.</p>
-
+    <div className="space-y-5">
       <div className="space-y-3">
         {levels.map((level, i) => (
           <div key={level.title}>
@@ -59,8 +53,7 @@ export default function StrategicPlanningSection() {
         ))}
       </div>
 
-      {/* Ações de crise */}
-      <div className="mt-5 rounded-2xl border border-border overflow-hidden">
+      <div className="rounded-2xl border border-border overflow-hidden">
         <div className="bg-gradient-to-r from-amber-600 to-amber-500 px-5 py-3 flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 text-white" />
           <div>
@@ -80,8 +73,7 @@ export default function StrategicPlanningSection() {
         </div>
       </div>
 
-      {/* SWOT resumido */}
-      <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="rounded-2xl border border-border p-4">
           <h4 className="text-xs font-bold text-foreground mb-2">Pontos Fortes</h4>
           <ul className="space-y-1">

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileText, Plus, Trash2, ClipboardList } from "lucide-react";
+import { FileText, Plus, Trash2 } from "lucide-react";
 import type { Report, DashboardState } from "@/lib/dashboard-data";
 import { uid, nowLabel } from "@/lib/dashboard-data";
 
@@ -40,14 +40,8 @@ export default function ReportsSection({ reports, state, onChange }: Props) {
   const remove = (id: string) => onChange(reports.filter((r) => r.id !== id));
 
   return (
-    <div className="dashboard-card">
-      <div className="flex items-center gap-2 mb-1">
-        <ClipboardList className="w-5 h-5 text-accent" />
-        <h2 className="section-title">Gestão de relatórios</h2>
-      </div>
-      <p className="section-desc mb-5">Snapshots gerenciais com histórico e observações.</p>
-
-      <div className="border border-border rounded-[14px] p-5 mb-5 form-field">
+    <div className="space-y-5">
+      <div className="border border-border rounded-2xl p-4 form-field">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label>Título<input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Relatório executivo semanal" required /></label>
@@ -69,15 +63,13 @@ export default function ReportsSection({ reports, state, onChange }: Props) {
           <div className="text-center py-6 text-muted-foreground text-sm">Nenhum relatório gerado.</div>
         )}
         {reports.map((r) => (
-          <div key={r.id} className="flex items-center justify-between gap-4 border border-border rounded-[14px] p-4 bg-muted/50">
+          <div key={r.id} className="flex items-center justify-between gap-4 border border-border rounded-2xl p-4 bg-muted/50">
             <div>
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-accent" />
                 <strong className="text-sm">{r.title}</strong>
               </div>
-              <div className="text-xs text-muted-foreground mt-1">
-                {r.owner} · {r.createdAt}
-              </div>
+              <div className="text-xs text-muted-foreground mt-1">{r.owner} · {r.createdAt}</div>
               <div className="text-xs text-muted-foreground mt-1">
                 Frota: {r.snapshot.fleet} | Fornecedores: {r.snapshot.suppliers} | Rotas: {r.snapshot.routes} | Combustível: {r.snapshot.fuelLiters} L | Pontualidade: {r.snapshot.onTime}%
               </div>
