@@ -60,7 +60,7 @@ export default function StrategicPlanningSection() {
       <div className="rounded-2xl border border-border overflow-hidden">
         <div className="bg-gradient-to-r from-amber-600 to-amber-500 px-5 py-3 flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 text-white" />
-          <GraduationCap className="w-4 h-4 text-white/70" title="Seção acadêmica" />
+          <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-white/70" /></span>
           <div>
             <h3 className="text-white font-bold text-sm">Plano de contingência (5W2H)</h3>
             <p className="text-white/80 text-xs">Ações para crises como greves e aumento de combustível</p>
