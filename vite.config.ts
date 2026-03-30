@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   },
   preview: {
     host: "0.0.0.0",
-    port: 4173,
+    port: 4174,
     allowedHosts: ["anadm.site", "localhost", "127.0.0.1"],
   },
   plugins: [react()],
