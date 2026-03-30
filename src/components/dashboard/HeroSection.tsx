@@ -1,16 +1,23 @@
-import { Database, Printer, FileJson, FileSpreadsheet, Trash2, Target, Eye, Shield } from "lucide-react";
+import { useState } from "react";
+import { Database, Printer, FileJson, FileSpreadsheet, Trash2, Target, Eye, Shield, FlaskConical, GraduationCap } from "lucide-react";
 import type { DashboardState } from "@/lib/dashboard-data";
 import { COMPANY_INFO } from "@/lib/dashboard-data";
+import { generateRandomData } from "@/lib/academic-data";
+import { loadTests } from "@/lib/academic-data";
 import logo from "@/assets/logo-transfarmasul.jpeg";
+import AcademicReportModal from "./AcademicReportModal";
 
 interface Props {
   onSeedDemo: () => void;
   onClearAll: () => void;
   onExportJson: () => void;
+  onSetState: (data: any) => void;
   state: DashboardState;
 }
 
-export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, state }: Props) {
+export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, onSetState, state }: Props) {
+  const [reportModal, setReportModal] = useState(false);
+
   const handlePrint = () => window.print();
 
   const exportCsv = () => {
@@ -25,16 +32,24 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, stat
     a.click();
   };
 
+  const handleRandomTest = () => {
+    const randomData = generateRandomData();
+    onSetState(randomData);
+  };
+
+  // Active tests from professor
+  const activeTests = loadTests().filter((t) => t.active);
+
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
         <div className="lg:col-span-3 dashboard-card relative overflow-hidden">
           <div className="absolute -right-24 -bottom-24 w-64 h-64 rounded-full opacity-20" style={{ background: "radial-gradient(circle, hsl(204 38% 45%), transparent 70%)" }} />
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-3 mb-3">
-              <img src={logo} alt="TransFarmaSul" className="w-12 h-12 rounded-xl object-contain shadow-md" />
+            <div className="inline-flex items-center gap-4 mb-3">
+              <img src={logo} alt="TransFarmaSul" className="w-16 h-16 rounded-2xl object-contain shadow-lg bg-white p-1" />
               <div>
-                <span className="text-accent text-xs font-bold uppercase tracking-widest">Painel Administrativo - SWOT</span>
+                <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#8D0000" }}>Painel Administrativo - SWOT</span>
                 <p className="text-xs text-muted-foreground">Acadêmicos do curso de Administração</p>
               </div>
             </div>
@@ -59,6 +74,12 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, stat
             <button onClick={onClearAll} className="inline-flex items-center justify-center gap-2 bg-card border border-input text-foreground px-3 py-2.5 rounded-xl font-semibold text-sm hover:-translate-y-0.5 transition-transform">
               <Trash2 className="w-4 h-4" />Limpar base
             </button>
+            <button onClick={handleRandomTest} title="Gerar cenário aleatório" className="inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl font-semibold text-sm hover:-translate-y-0.5 transition-transform text-white" style={{ background: "#3C2D26" }}>
+              <FlaskConical className="w-4 h-4" />Teste Analítico
+            </button>
+            <button onClick={() => setReportModal(true)} className="inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl font-semibold text-sm hover:-translate-y-0.5 transition-transform text-white" style={{ background: "#8D0000" }}>
+              <GraduationCap className="w-4 h-4" />Relatório Acadêmico
+            </button>
             <button onClick={handlePrint} className="inline-flex items-center justify-center gap-2 bg-card border border-input text-foreground px-3 py-2.5 rounded-xl font-semibold text-sm hover:-translate-y-0.5 transition-transform">
               <Printer className="w-4 h-4" />Imprimir / PDF
             </button>
@@ -72,26 +93,49 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, stat
         </div>
       </div>
 
+      {/* Active tests banner */}
+      {activeTests.length > 0 && (
+        <div className="rounded-2xl border-2 p-4 space-y-2" style={{ borderColor: "#8D0000", background: "hsla(0, 100%, 28%, 0.04)" }}>
+          <h3 className="text-sm font-bold flex items-center gap-2" style={{ color: "#8D0000" }}>
+            <FlaskConical className="w-4 h-4" />Testes disponíveis
+          </h3>
+          {activeTests.map((t) => (
+            <div key={t.id} className="flex items-center justify-between bg-card border border-border rounded-xl px-3 py-2">
+              <div>
+                <p className="text-sm font-semibold">{t.title}</p>
+                <p className="text-xs text-muted-foreground">{t.description} · Prazo: {t.deadline || "Sem prazo"}</p>
+              </div>
+              <button onClick={handleRandomTest} className="text-xs px-3 py-1.5 rounded-lg font-semibold text-white" style={{ background: "#3C2D26" }}>Gerar cenário</button>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Missão, Visão, Valores */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="dashboard-card">
           <div className="flex items-center gap-2 mb-2">
             <Target className="w-5 h-5 text-accent" />
             <h3 className="font-semibold text-sm">Missão</h3>
+            <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-muted-foreground/50" /></span>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">{COMPANY_INFO.missao}</p>
+          <p className="text-[10px] text-muted-foreground/50 italic mt-3">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico*</p>
         </div>
         <div className="dashboard-card">
           <div className="flex items-center gap-2 mb-2">
             <Eye className="w-5 h-5 text-accent" />
             <h3 className="font-semibold text-sm">Visão</h3>
+            <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-muted-foreground/50" /></span>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">{COMPANY_INFO.visao}</p>
+          <p className="text-[10px] text-muted-foreground/50 italic mt-3">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico*</p>
         </div>
         <div className="dashboard-card">
           <div className="flex items-center gap-2 mb-2">
             <Shield className="w-5 h-5 text-accent" />
             <h3 className="font-semibold text-sm">Valores</h3>
+            <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-muted-foreground/50" /></span>
           </div>
           <ul className="space-y-1">
             {COMPANY_INFO.valores.map((v) => (
@@ -101,8 +145,11 @@ export default function HeroSection({ onSeedDemo, onClearAll, onExportJson, stat
               </li>
             ))}
           </ul>
+          <p className="text-[10px] text-muted-foreground/50 italic mt-3">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico*</p>
         </div>
       </div>
+
+      <AcademicReportModal open={reportModal} onClose={() => setReportModal(false)} state={state} />
     </div>
   );
 }
