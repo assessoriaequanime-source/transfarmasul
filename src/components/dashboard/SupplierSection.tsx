@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pencil, Trash2, Users, Plus, RotateCcw } from "lucide-react";
+import { Pencil, Trash2, Plus, RotateCcw } from "lucide-react";
 import type { Supplier } from "@/lib/dashboard-data";
 import { uid, getStatusClass } from "@/lib/dashboard-data";
 
@@ -40,13 +40,9 @@ export default function SupplierSection({ suppliers, onChange }: Props) {
   };
 
   return (
-    <>
-      <div className="dashboard-card form-field">
-        <div className="flex items-center gap-2 mb-1">
-          <Users className="w-5 h-5 text-accent" />
-          <h2 className="section-title">Cadastro de fornecedores</h2>
-        </div>
-        <p className="section-desc mb-4">Rede operacional, qualidade e SLA.</p>
+    <div className="space-y-5">
+      <div className="form-field border border-border rounded-2xl p-4">
+        <h3 className="text-sm font-semibold mb-3">Cadastrar fornecedor</h3>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <label>Fornecedor<input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Laboratório Alfa" required /></label>
@@ -75,10 +71,10 @@ export default function SupplierSection({ suppliers, onChange }: Props) {
         </form>
       </div>
 
-      <div className="dashboard-card p-0 overflow-hidden">
-        <div className="p-5 pb-0">
-          <h2 className="section-title">Base de fornecedores</h2>
-          <p className="section-desc mb-3">SLA e score para priorização gerencial.</p>
+      <div className="overflow-hidden border border-border rounded-2xl">
+        <div className="p-4 pb-0">
+          <h3 className="text-sm font-semibold">Base de fornecedores</h3>
+          <p className="text-xs text-muted-foreground mb-3">SLA e score para priorização gerencial.</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
@@ -120,6 +116,6 @@ export default function SupplierSection({ suppliers, onChange }: Props) {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 }
