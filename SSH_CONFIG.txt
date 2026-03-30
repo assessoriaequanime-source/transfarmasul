@@ -1,0 +1,21 @@
+# Configuração SSH para VPS TransFarmaSul
+# Salve como: ~/.ssh/config
+
+Host anadm
+    HostName anadm.site
+    User root
+    Port 22
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    LogLevel ERROR
+    ConnectTimeout 10
+    ServerAliveInterval 60
+    ServerAliveCountMax 5
+
+Host transfarmasul
+    HostName anadm.site
+    User root
+    Port 22
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    LogLevel ERROR
