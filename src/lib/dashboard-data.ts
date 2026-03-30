@@ -89,6 +89,59 @@ export function getStatusClass(status: string): 'ok' | 'warn' | 'danger' {
   return 'warn';
 }
 
+export const COMPANY_INFO = {
+  missao: "Transporte de insumos no ramo farmacêutico, garantindo segurança, qualidade e pontualidade nas entregas, atendendo às necessidades da indústria farmacêutica.",
+  visao: "Expandir as operações para todo o Brasil e, futuramente, para outros países da América Latina, tornando-se referência em logística farmacêutica.",
+  valores: [
+    "Transparência em todas as operações",
+    "Ética nas relações com clientes e parceiros",
+    "Compliance e conformidade com normas regulatórias",
+  ],
+  pontosFortes: ["Frota própria (conta própria), sem dependência de terceiros"],
+  pontosFracos: [
+    "Frota pequena: apenas 5 caminhões disponíveis",
+    "Atendimento limitado somente à região Sul",
+    "Atrasos recorrentes nas entregas",
+    "Demanda reduzida devido ao tamanho da empresa",
+  ],
+  metas: "Aumento da frota até o final do ano, explorar novos clientes. Abrir nova linha para transportes fora da indústria farmacêutica em 1-2 anos.",
+  planejamento: {
+    estrategico: [
+      "Aumento da frota",
+      "Expansão do atendimento em Santa Catarina",
+      "Fortalecimento da marca",
+      "Transporte de outros tipos de mercadorias",
+      "Redução dos custos com combustível",
+    ],
+    tatico: [
+      "Logística: melhorar rotas e prazos",
+      "Financeiro: controlar gastos com combustível",
+      "Comercial: buscar novos clientes",
+      "Compras/Contratos: revisar parcerias e fornecedores",
+      "Faturamento: acompanhar recebimentos e mudanças no frete",
+    ],
+    operacional: [
+      "Definição diária das rotas",
+      "Controle do combustível de cada veículo",
+      "Acompanhamento dos horários de saída e chegada",
+      "Manutenção preventiva dos caminhões",
+      "Monitoramento das cargas",
+      "Comunicação com clientes sobre prazos",
+      "Uso de horários com menos trânsito",
+    ],
+  },
+  acoesCrise: [
+    "Avisos aos clientes",
+    "Horários contra fluxo",
+    "Otimização de rotas",
+    "Revisão de contratos",
+    "Cortes de gastos desnecessários",
+    "Terceirizar veículos para rotas curtas",
+    "Atualização de tabela de frete",
+    "Home office para setores administrativos",
+  ],
+};
+
 export const DEMO_DATA: DashboardState = {
   vehicles: [
     { id: uid(), plate: "RXT3F21", model: "Mercedes Atego 1719", type: "Truck", capacity: 14000, efficiency: 3.1, status: "ativo" },
@@ -106,6 +159,7 @@ export const DEMO_DATA: DashboardState = {
   routes: [
     { id: uid(), name: "Criciúma → Joinville", vehicleId: "", vehicleLabel: "RXT3F21 · Mercedes Atego 1719", origin: "Criciúma, SC", destination: "Joinville, SC", priority: "alta", deadline: "Hoje", deliveries: 4, notes: "Cluster farmacêutico", distanceKm: 390, durationH: 6.4, fuelLiters: 125.8, createdAt: nowLabel() },
     { id: uid(), name: "Criciúma → Florianópolis", vehicleId: "", vehicleLabel: "QHY8B44 · VW Delivery 11.180", origin: "Criciúma, SC", destination: "Florianópolis, SC", priority: "média", deadline: "Amanhã", deliveries: 3, notes: "Reabastecimento regional", distanceKm: 210, durationH: 3.2, fuelLiters: 60, createdAt: nowLabel() },
+    { id: uid(), name: "Criciúma → Blumenau", vehicleId: "", vehicleLabel: "RLR7A09 · Iveco Tector 9-190", origin: "Criciúma, SC", destination: "Blumenau, SC", priority: "alta", deadline: "48h", deliveries: 2, notes: "Insumos RFID", distanceKm: 320, durationH: 5.1, fuelLiters: 84.2, createdAt: nowLabel() },
   ],
   reports: [],
 };
