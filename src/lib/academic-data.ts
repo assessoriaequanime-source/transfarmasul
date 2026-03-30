@@ -80,9 +80,16 @@ const SUPPLIER_NAMES = [
 ];
 const CATEGORIES = ["Farmacêutico", "Embalagem", "Manutenção", "Combustível"];
 const CITIES_SC = [
-  "Criciúma, SC", "Joinville, SC", "Florianópolis, SC", "Blumenau, SC",
-  "Palhoça, SC", "Tubarão, SC", "Lages, SC", "Chapecó, SC",
-  "Itajaí, SC", "Jaraguá do Sul, SC", "São José, SC", "Brusque, SC"
+  "Blumenau, SC",
+  "Brusque, SC",
+  "Camboriú, SC",
+  "Ilhota, SC",
+  "Itajaí, SC",
+  "Luiz Alves, SC",
+  "Navegantes, SC",
+  "Penha, SC",
+  "Piçarras, SC",
+  "Tijucas, SC"
 ];
 
 function rand(min: number, max: number) {

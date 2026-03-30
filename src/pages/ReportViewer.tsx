@@ -130,8 +130,8 @@ export default function ReportViewer() {
 
         {/* Footer */}
         <div className="text-center py-4 space-y-1">
-          <p className="text-xs text-muted-foreground">TransFarmaSul · Dashboard Analítico de estudos·</p>
-          <p className="text-[10px] text-muted-foreground/60">BY DEV - Ana Cristina Alves Ferreira</p>
+          <p className="text-xs text-muted-foreground italic">*Análise desenvolvida pelos alunos da disciplina de Planejamento Estratégico</p>
+          <p className="text-[10px] text-muted-foreground/60">TransFarmaSul · Dashboard Analítico</p>
         </div>
       </div>
     </div>

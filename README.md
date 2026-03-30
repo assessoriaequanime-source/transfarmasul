@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# TransFarmaSul - Dashboard Logístico Acadêmico
 
 TODO: Document your project here
