@@ -30,7 +30,7 @@ export default function StrategicPlanningSection() {
           <div key={level.title}>
             <div className="rounded-2xl border border-border overflow-hidden">
               <div className={`bg-gradient-to-r ${level.gradient} px-5 py-3 flex items-center gap-2`}>
-                <GraduationCap className="w-4 h-4 text-white/70" title="Seção acadêmica" />
+                <span title="Seção acadêmica"><GraduationCap className="w-4 h-4 text-white/70" /></span>
                 <div>
                   <h3 className="text-white font-bold text-sm">{level.title}</h3>
                   <p className="text-white/80 text-xs">{level.desc}</p>
